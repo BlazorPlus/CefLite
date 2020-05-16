@@ -5,9 +5,29 @@ VisualStudioVersion = 16.0.30011.22
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "CefLite", "CefLite\CefLite.shproj", "{3DB27A06-0596-4307-B289-33F4C8B60B60}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CefLiteCore", "CefLiteCore\CefLiteCore.csproj", "{7F3D7F58-EE21-44E9-BF74-FB59701DC3B1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CefLiteFX", "CefLiteFX\CefLiteFX.csproj", "{E426B24D-18F1-435D-8CD9-199A46F081F1}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		CefLite\CefLite.projitems*{3db27a06-0596-4307-b289-33f4c8b60b60}*SharedItemsImports = 13
+		CefLite\CefLite.projitems*{7f3d7f58-ee21-44e9-bf74-fb59701dc3b1}*SharedItemsImports = 5
+		CefLite\CefLite.projitems*{e426b24d-18f1-435d-8cd9-199a46f081f1}*SharedItemsImports = 4
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7F3D7F58-EE21-44E9-BF74-FB59701DC3B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F3D7F58-EE21-44E9-BF74-FB59701DC3B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F3D7F58-EE21-44E9-BF74-FB59701DC3B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F3D7F58-EE21-44E9-BF74-FB59701DC3B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E426B24D-18F1-435D-8CD9-199A46F081F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E426B24D-18F1-435D-8CD9-199A46F081F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E426B24D-18F1-435D-8CD9-199A46F081F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E426B24D-18F1-435D-8CD9-199A46F081F1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

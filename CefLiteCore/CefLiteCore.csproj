@@ -1,0 +1,49 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+	  <UseWPF>true</UseWPF>
+	  <Version>0.1.1</Version>
+	  <PackageLicenseFile>license.txt</PackageLicenseFile>
+	  <PackageIcon>Plus.png</PackageIcon>
+	  <RepositoryUrl>https://github.com/BlazorPlus/CefLite/</RepositoryUrl>
+	  <PackageProjectUrl>https://github.com/BlazorPlus/CefLite/</PackageProjectUrl>
+	  <AssemblyVersion>1.0.0.0</AssemblyVersion>
+	  <FileVersion>1.0.0.0</FileVersion>
+	  <PackageTags>Cef,Chromium</PackageTags>
+	  <Description>Another interop binding for CEF , Fore WinForms Core + Asp.Net Core
+This is a CEF library for BlazorCefApp, 
+check https://github.com/BlazorPlus/BlazorCefApp/ for more</Description>
+	  <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+	  <RootNamespace>CefLite</RootNamespace>
+	  <SignAssembly>true</SignAssembly>
+	  <AssemblyOriginatorKeyFile>CefLite.snk</AssemblyOriginatorKeyFile>
+	  <DelaySign>false</DelaySign>
+	  <PackageReleaseNotes>This is a CEF library for BlazorCefApp, 
+check https://github.com/BlazorPlus/BlazorCefApp/ for more</PackageReleaseNotes>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\license.txt">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+    <None Include="..\Plus.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+  <Import Project="..\CefLite\CefLite.projitems" Label="Shared" />
+
+</Project>

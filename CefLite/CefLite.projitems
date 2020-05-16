@@ -9,5 +9,62 @@
     <Import_RootNamespace>CefLite</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)BrowserAgent.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CefWin.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DefaultBrowserForm.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DefaultBrowserForm.Designer.cs">
+      <DependentUpon>DefaultBrowserForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)DefaultDownloadForm.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DefaultDownloadForm.Designer.cs">
+      <DependentUpon>DefaultDownloadForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)DownloadItem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Enums.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ICefWinBrowser.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interop\cef_app_t.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interop\cef_base_ref_counted_t.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interop\cef_browser_host_t.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interop\cef_browser_process_handler_t.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interop\cef_browser_settings_t.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interop\cef_browser_t.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interop\cef_client_t.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interop\cef_command_line_t.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interop\cef_dictionary_value_t.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interop\cef_download_handler_t.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interop\cef_frame_t.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interop\cef_life_span_handler_t.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interop\cef_list_value_t.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interop\cef_load_handler_t.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interop\cef_popup_features_t.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interop\cef_process_message_t.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interop\cef_render_process_handler_t.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interop\cef_request_callback_t.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interop\cef_request_context_t.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interop\cef_request_handler_t.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interop\cef_request_t.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interop\cef_resource_request_handler_t .cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interop\cef_scheme_registrar_t.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interop\cef_settings_t.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interop\cef_sslinfo_t.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interop\cef_string_t.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interop\cef_v8context_t.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interop\cef_v8value_t.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interop\cef_window_info_t.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interop\Extensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interop\LibCefInterop.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interop\ObjectInterop_F.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interop\PointerClasses.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interop\WindowsInterop.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interop\_baseclasses.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interop\__empty.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SplashForm.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SplashForm.Designer.cs">
+      <DependentUpon>SplashForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Utilities\DebugForm.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utilities\DebugForm.Designer.cs">
+      <DependentUpon>DebugForm.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
 </Project>
