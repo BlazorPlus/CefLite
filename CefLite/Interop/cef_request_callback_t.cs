@@ -18,17 +18,8 @@ namespace CefLite.Interop
 
     }
 
-    public unsafe class CefRequestCallback : ObjectFromCef<cef_request_callback_t, CefRequestCallback>
+    public unsafe partial class CefRequestCallback
     {
-
-        private CefRequestCallback(IntPtr ptr) : base(ptr) { }
-        static public CefRequestCallback FromNative(cef_request_callback_t* ptr)
-            => FromNative((IntPtr)ptr, (p2) => new CefRequestCallback(p2));
-        public cef_request_callback_t* FixedPtr => (cef_request_callback_t*)Ptr;
-
-        static public implicit operator CefRequestCallback(cef_request_callback_t* ptr) => FromNative(ptr);
-
-
         public void Cont()
         {
             var func = Marshal.GetDelegateForFunctionPointer<EventCallbackHandler>(FixedPtr->cont);

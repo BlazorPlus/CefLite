@@ -28,7 +28,7 @@ namespace CefLite.Interop
         int scrollbarsVisible;
     }
 
-    public unsafe class CefPopupFeatures : FixedPointer<cef_popup_features_t, CefPopupFeatures>
+    public unsafe partial class CefPopupFeatures : FixedPointer<cef_popup_features_t, CefPopupFeatures>
     {
         public cef_popup_features_t* FixedPtr => (cef_popup_features_t*)Ptr;
 
@@ -45,12 +45,12 @@ namespace CefLite.Interop
         {
 
         }
-        static public CefPopupFeatures FromNative(IntPtr ptr)
+        static public CefPopupFeatures FromInArg(IntPtr ptr)
         {
             if (ptr == IntPtr.Zero) return null;
             return new CefPopupFeatures(ptr);
         }
-        static public CefPopupFeatures FromNative(cef_popup_features_t* ptr)
+        static public CefPopupFeatures FromInArg(cef_popup_features_t* ptr)
         {
             if (ptr == null) return null;
             return new CefPopupFeatures((IntPtr)ptr);

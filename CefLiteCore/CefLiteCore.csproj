@@ -5,7 +5,7 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
 	  <UseWPF>true</UseWPF>
-	  <Version>0.1.1</Version>
+	  <Version>0.1.2</Version>
 	  <PackageLicenseFile>license.txt</PackageLicenseFile>
 	  <PackageIcon>Plus.png</PackageIcon>
 	  <RepositoryUrl>https://github.com/BlazorPlus/CefLite/</RepositoryUrl>
@@ -21,7 +21,9 @@ check https://github.com/BlazorPlus/BlazorCefApp/ for more</Description>
 	  <SignAssembly>true</SignAssembly>
 	  <AssemblyOriginatorKeyFile>CefLite.snk</AssemblyOriginatorKeyFile>
 	  <DelaySign>false</DelaySign>
-	  <PackageReleaseNotes>This is a CEF library for BlazorCefApp, 
+	  <PackageReleaseNotes>0.1.2 - fixed addref/release issue
+--
+This is a CEF library for BlazorCefApp, 
 check https://github.com/BlazorPlus/BlazorCefApp/ for more</PackageReleaseNotes>
   </PropertyGroup>
 

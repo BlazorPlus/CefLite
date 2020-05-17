@@ -25,7 +25,7 @@ namespace CefLite.Interop
         public IntPtr on_protocol_execution;
     }
 
-    public unsafe class CefResourceRequestHandler : ObjectFromNet<cef_resource_request_handler_t, CefResourceRequestHandler>
+    public unsafe partial class CefResourceRequestHandler : ObjectFromNet<cef_resource_request_handler_t, CefResourceRequestHandler>
     {
         public cef_resource_request_handler_t* FixedPtr => (cef_resource_request_handler_t*)Ptr;
 
@@ -39,7 +39,7 @@ namespace CefLite.Interop
             delegate (IntPtr self, cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request, cef_request_callback_t* callback)
             {
                 var inst = GetInstance(self);
-                return inst.BeforeResourceLoad?.Invoke(inst, CefBrowser.FromNative(browser), CefFrame.FromNative(frame), CefRequest.FromNative(request), CefRequestCallback.FromNative(callback))
+                return inst.BeforeResourceLoad?.Invoke(inst, CefBrowser.FromInArg(browser), CefFrame.FromInArg(frame), CefRequest.FromInArg(request), CefRequestCallback.FromInArg(callback))
                     ?? cef_return_value_t.RV_CONTINUE;
             });
         public Func<CefResourceRequestHandler, CefBrowser, CefFrame, CefRequest, CefRequestCallback, cef_return_value_t> BeforeResourceLoad { get; set; }

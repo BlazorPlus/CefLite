@@ -31,7 +31,7 @@ namespace CefLite.Interop
         public IntPtr window;
     }
 
-    public unsafe class CefWindowInfo : FixedPointer<cef_window_info_t, CefWindowInfo>
+    public unsafe partial class CefWindowInfo : FixedPointer<cef_window_info_t, CefWindowInfo>
     {
         public cef_window_info_t* FixedPtr => (cef_window_info_t*)Ptr;
 
@@ -67,12 +67,12 @@ namespace CefLite.Interop
         {
 
         }
-        static public CefWindowInfo FromNative(IntPtr ptr)
+        static public CefWindowInfo FromInArg(IntPtr ptr)
         {
             if (ptr == IntPtr.Zero) return null;
             return new CefWindowInfo(ptr);
         }
-        static public CefWindowInfo FromNative(cef_window_info_t* ptr)
+        static public CefWindowInfo FromInArg(cef_window_info_t* ptr)
         {
             if (ptr == null) return null;
             return new CefWindowInfo((IntPtr)ptr);

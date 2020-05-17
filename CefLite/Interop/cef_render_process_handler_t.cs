@@ -26,7 +26,7 @@ namespace CefLite.Interop
         public IntPtr on_process_message_received;  // Broser process cef_frame_t::send_process_message
     }
 
-    public unsafe class CefRenderProcessHandler : ObjectFromNet<cef_render_process_handler_t, CefRenderProcessHandler>
+    public unsafe partial class CefRenderProcessHandler : ObjectFromNet<cef_render_process_handler_t, CefRenderProcessHandler>
     {
         public cef_render_process_handler_t* FixedPtr => (cef_render_process_handler_t*)Ptr;
 
@@ -41,8 +41,8 @@ namespace CefLite.Interop
         static DelegateHolder<EventCallbackHandler4> holder_on_context_created = new DelegateHolder<EventCallbackHandler4>(
           (ptr, browser, frame, v8c) =>
           {
-              CefBrowser browserObj = CefBrowser.FromNative(browser);
-              CefFrame frameObj = CefFrame.FromNative(frame);
+              CefBrowser browserObj = CefBrowser.FromInArg(browser);
+              CefFrame frameObj = CefFrame.FromInArg(frame);
               string url = frameObj.Url;
 
               long id = browserObj.Identifier;
@@ -52,7 +52,7 @@ namespace CefLite.Interop
               if (url == null || !url.StartsWith("http"))  //avoid devtools:// etc
                   return;
 
-              CefV8Context ctx = CefV8Context.FromNative(v8c);
+              CefV8Context ctx = CefV8Context.FromInArg(v8c);
 
               try
               {
@@ -64,7 +64,7 @@ namespace CefLite.Interop
               }
 
               var self = GetInstance(ptr);
-              self.ContextCreated?.Invoke(self, browserObj, CefFrame.FromNative(frame), ctx);
+              self.ContextCreated?.Invoke(self, browserObj, CefFrame.FromInArg(frame), ctx);
           });
         public Action<CefRenderProcessHandler, CefBrowser, CefFrame, CefV8Context> ContextCreated { get; set; }
 
@@ -83,10 +83,10 @@ namespace CefLite.Interop
         static DelegateHolder<delegate_on_process_message_received> holder_on_process_message_received = new DelegateHolder<delegate_on_process_message_received>(
             (IntPtr handler, cef_browser_t* browser, cef_frame_t* frame, cef_process_id_t pid, cef_process_message_t* message) =>
             {
-                CefProcessMessage cefmsg = message;
+                CefProcessMessage cefmsg = CefProcessMessage.FromInArg(message);
                 CefWin.WriteDebugLine("CefRenderProcessHandler:on_process_message_received:" + cefmsg.ToString());
                 CefRenderProcessHandler inst = GetInstance(handler); ;
-                inst.ProcessMessageReceived?.Invoke(inst, CefBrowser.FromNative(browser), CefFrame.FromNative(frame), pid, cefmsg);
+                inst.ProcessMessageReceived?.Invoke(inst, CefBrowser.FromInArg(browser), CefFrame.FromInArg(frame), pid, cefmsg);
                 return 0;
             });
         public Action<CefRenderProcessHandler, CefBrowser, CefFrame, cef_process_id_t, CefProcessMessage> ProcessMessageReceived { get; set; }

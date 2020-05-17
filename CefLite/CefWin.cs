@@ -106,10 +106,7 @@ namespace CefLite
             // * * single-process is not recommanded by chromium team , If you get any strange issue , try removing this option: 
             // * * see https://peter.sh/experiments/chromium-command-line-switches/ for more 
             // * * ERROR msg in https://github.com/chromium/chromium/blob/bd61bd83c9ebcfdb162a447e4a01637d259ea358/chrome/browser/net/system_network_context_manager.cc
-            //CefAdditionArguments.Add("--single-process");    //use single process , memory usage is 170MB , otherwise 340MB
-            // now force to --single-process until all code be compatible with multi-process mode
-
-
+            CefAdditionArguments.Add("--single-process");    //use single process , memory usage is 170MB , otherwise 340MB
             CefAdditionArguments.Add("--winhttp-proxy-resolver");
             CefAdditionArguments.Add("--no-proxy-server");  //https://code.google.com/archive/p/chromiumembedded/issues/81
 

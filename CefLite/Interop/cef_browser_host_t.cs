@@ -76,14 +76,9 @@ namespace CefLite.Interop
 
     }
 
-    public unsafe class CefBrowserHost : ObjectFromCef<cef_browser_host_t, CefBrowserHost>
+    public unsafe partial class CefBrowserHost
     {
-        private CefBrowserHost(IntPtr ptr) : base(ptr) { }
-        static public CefBrowserHost FromNative(cef_browser_host_t* ptr)
-            => FromNative((IntPtr)ptr, (p2) => new CefBrowserHost(p2));
-        public cef_browser_host_t* FixedPtr => (cef_browser_host_t*)Ptr;
-
-        static public implicit operator CefBrowserHost(cef_browser_host_t* ptr) => FromNative(ptr);
+       
 
         public IntPtr GetWindowHandle()
         {

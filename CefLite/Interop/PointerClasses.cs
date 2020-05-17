@@ -15,7 +15,6 @@ namespace CefLite.Interop
     {
         public IntPtr Ptr { get; protected set; }
 
-
         static public implicit operator IntPtr(BasePointer<T> obj)
         {
             return obj?.Ptr ?? IntPtr.Zero;
@@ -53,7 +52,7 @@ namespace CefLite.Interop
             Recycle = recycleHandler;
         }
 
-        protected FixedPointer(IntPtr intptr) //for FromNative only
+        protected FixedPointer(IntPtr intptr) //for FromInArg only
         {
             MemoryType = StructMemoryType.Native;
             Ptr = intptr;
@@ -142,17 +141,33 @@ namespace CefLite.Interop
             return _typed_release(Ptr);
         }
 
-        static public T2 FromNative<T2>(IntPtr ptr, Func<IntPtr, T2> ctor)
+        static public T2 FromInArg<T2>(IntPtr ptr, Func<IntPtr, T2> ctorAddRef)
             where T2 : ObjectFromCef<TS, TC>
         {
             if (ptr == IntPtr.Zero) return null;
             if (s_map.TryGetValue(ptr, out var wr))
                 if (wr.TryGetTarget(out var target))
                     return (T2)target;
-            //if (typeof(T2) == typeof(CefBrowser)) CefWin.WriteDebugLine("CefBrowser FromNative : 0x" + ptr.ToString("X"));
-            return ctor(ptr);
+            //if (typeof(T2) == typeof(CefBrowser)) CefWin.WriteDebugLine("CefBrowser FromInArg : 0x" + ptr.ToString("X"));
+            return ctorAddRef(ptr);
         }
 
+        static public T2 FromOutVal<T2>(IntPtr ptr, Func<IntPtr, T2> ctorNoAddref)
+           where T2 : ObjectFromCef<TS, TC>
+        {
+            if (ptr == IntPtr.Zero) return null;
+            if (s_map.TryGetValue(ptr, out var wr))
+            {
+                if (wr.TryGetTarget(out var target))
+                {
+                    T2 t2=(T2)target;
+                    t2.Release();
+                    return t2;
+                }
+            }
+            return ctorNoAddref(ptr);
+        }
+        
     }
 
 

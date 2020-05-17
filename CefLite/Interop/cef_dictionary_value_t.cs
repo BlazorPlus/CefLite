@@ -43,7 +43,7 @@ namespace CefLite.Interop
 
     }
 
-    public unsafe class CefDictionaryValue : FixedPointer<cef_dictionary_value_t, CefDictionaryValue>
+    public unsafe partial class CefDictionaryValue : FixedPointer<cef_dictionary_value_t, CefDictionaryValue>
     {
         public cef_dictionary_value_t* FixedPtr => (cef_dictionary_value_t*)Ptr;
 
@@ -54,12 +54,12 @@ namespace CefLite.Interop
         }
 
         private CefDictionaryValue(IntPtr ptr) : base(ptr) { }
-        static public CefDictionaryValue FromNative(IntPtr ptr)
+        static public CefDictionaryValue FromInArg(IntPtr ptr)
         {
             if (ptr == IntPtr.Zero) return null;
             return new CefDictionaryValue(ptr);
         }
-        static public CefDictionaryValue FromNative(cef_dictionary_value_t* ptr)
+        static public CefDictionaryValue FromInArg(cef_dictionary_value_t* ptr)
         {
             if (ptr == null) return null;
             return new CefDictionaryValue((IntPtr)ptr);

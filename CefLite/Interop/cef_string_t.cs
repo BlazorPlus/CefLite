@@ -44,7 +44,7 @@ namespace CefLite.Interop
 
     }
 
-    public unsafe class CefString : FixedPointer<cef_string_t, CefString>
+    public unsafe partial class CefString : FixedPointer<cef_string_t, CefString>
     {
         public cef_string_t* FixedPtr => (cef_string_t*)Ptr;
 

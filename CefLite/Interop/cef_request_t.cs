@@ -39,16 +39,8 @@ namespace CefLite.Interop
 
     }
 
-    public unsafe class CefRequest : ObjectFromCef<cef_request_t, CefRequest>
+    public unsafe partial class CefRequest
     {
-        private CefRequest(IntPtr ptr) : base(ptr) { }
-        static public CefRequest FromNative(cef_request_t* ptr)
-            => FromNative((IntPtr)ptr, (p2) => new CefRequest(p2));
-        public cef_request_t* FixedPtr => (cef_request_t*)Ptr;
-
-        static public implicit operator CefRequest(cef_request_t* ptr) => FromNative(ptr);
-
-
         public void SetHeaderByName(string name, string value, bool overWrite)
         {
             var func = Marshal.GetDelegateForFunctionPointer<delegate_set_header_by_name>(FixedPtr->set_header_by_name);

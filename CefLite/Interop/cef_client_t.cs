@@ -31,7 +31,7 @@ namespace CefLite.Interop
         public IntPtr on_process_message_received;  //   // Render process cef_frame_t::send_process_message
     }
 
-    public unsafe class CefClient : ObjectFromNet<cef_client_t, CefClient>
+    public unsafe partial class CefClient : ObjectFromNet<cef_client_t, CefClient>
     {
         public cef_client_t* FixedPtr => (cef_client_t*)Ptr;
 
@@ -53,7 +53,7 @@ namespace CefLite.Interop
         static DelegateHolder<delegate_on_process_message_received> holder_on_process_message_received = new DelegateHolder<delegate_on_process_message_received>(
             (cef_client_t* client, cef_browser_t* browser, cef_frame_t* frame, cef_process_id_t pid, cef_process_message_t* message) =>
             {
-                CefProcessMessage cefmsg = CefProcessMessage.FromNative(message);
+                CefProcessMessage cefmsg = CefProcessMessage.FromInArg(message);
                 CefWin.WriteDebugLine("CefClient:on_process_message_received:" + cefmsg.ToString());
                 return 0;
             });

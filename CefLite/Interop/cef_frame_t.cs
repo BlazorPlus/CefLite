@@ -43,17 +43,9 @@ namespace CefLite.Interop
 
 
 
-    public unsafe class CefFrame : ObjectFromCef<cef_frame_t, CefFrame>
+    public unsafe partial class CefFrame
     {
-        private CefFrame(IntPtr ptr) : base(ptr) { }
-        static public CefFrame FromNative(cef_frame_t* ptr)
-            => FromNative((IntPtr)ptr, (p2) => new CefFrame(p2));
-        static public CefFrame FromNative(IntPtr ptr)
-           => FromNative(ptr, (p2) => new CefFrame(p2));
-        public cef_frame_t* FixedPtr => (cef_frame_t*)Ptr;
-
-        static public implicit operator CefFrame(cef_frame_t* ptr) => FromNative(ptr);
-
+       
         long _id = long.MinValue;
         public long Identifier
         {
@@ -90,14 +82,16 @@ namespace CefLite.Interop
         {
 
             CefString cefname = name ?? throw new ArgumentNullException(nameof(name));
-            CefProcessMessage cefmsg = CefProcessMessage.FromNative(cef_process_message_create(cefname));
+            //TODO:issue , cef_process_message_create , FromOutVal failed.. Check why,
+            CefProcessMessage cefmsg = CefProcessMessage.FromInArg(cef_process_message_create(cefname));
             SendProcessMessage(target_pid, cefmsg);
         }
         public void SendProcessMessage(cef_process_id_t target_pid, string name, params string[] args)
         {
 
             CefString cefname = name ?? throw new ArgumentNullException(nameof(name));
-            CefProcessMessage cefmsg = CefProcessMessage.FromNative(cef_process_message_create(cefname));
+            //TODO:issue , cef_process_message_create , FromOutVal failed.. Check why,
+            CefProcessMessage cefmsg = CefProcessMessage.FromInArg(cef_process_message_create(cefname));
             if (args != null)
             {
                 var list = cefmsg.GetArgumentList();

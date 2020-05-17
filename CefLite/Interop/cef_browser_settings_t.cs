@@ -56,7 +56,7 @@ namespace CefLite.Interop
 
     }
 
-    public unsafe class CefBrowserSettings : FixedPointer<cef_browser_settings_t, CefBrowserSettings>
+    public unsafe partial class CefBrowserSettings : FixedPointer<cef_browser_settings_t, CefBrowserSettings>
     {
         public cef_browser_settings_t* FixedPtr => (cef_browser_settings_t*)Ptr;
 
@@ -71,12 +71,12 @@ namespace CefLite.Interop
         {
 
         }
-        static public CefBrowserSettings FromNative(IntPtr ptr)
+        static public CefBrowserSettings FromInArg(IntPtr ptr)
         {
             if (ptr == IntPtr.Zero) return null;
             return new CefBrowserSettings(ptr);
         }
-        static public CefBrowserSettings FromNative(cef_browser_settings_t* ptr)
+        static public CefBrowserSettings FromInArg(cef_browser_settings_t* ptr)
         {
             if (ptr == null) return null;
             return new CefBrowserSettings((IntPtr)ptr);

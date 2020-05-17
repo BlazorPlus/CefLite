@@ -37,25 +37,15 @@ namespace CefLite.Interop
         public IntPtr get_frame_names;
     }
 
-    public unsafe class CefBrowser : ObjectFromCef<cef_browser_t, CefBrowser>
+    public unsafe partial class CefBrowser
     {
-
-        private CefBrowser(IntPtr ptr) : base(ptr) { }
-        static public CefBrowser FromNative(cef_browser_t* ptr)
-            => FromNative((IntPtr)ptr, (p2) => new CefBrowser(p2));
-        static public CefBrowser FromNative(IntPtr ptr)
-            => FromNative(ptr, (p2) => new CefBrowser(p2));
-        public cef_browser_t* FixedPtr => (cef_browser_t*)Ptr;
-
-        static public implicit operator CefBrowser(cef_browser_t* ptr) => FromNative(ptr);
-
         static public CefBrowser CreateBrowserSync(CefWindowInfo wininfo, CefClient client, string url, CefBrowserSettings browser_settings, CefDictionaryValue extra_info = null, CefRequestContext requestContext = null)
         {
             CefString cefurl = url ?? throw new ArgumentNullException(nameof(url));
             cef_browser_t* pBrowser = ObjectInterop.cef_browser_host_create_browser_sync(wininfo, client, cefurl, browser_settings, extra_info, requestContext);
             if (pBrowser == null)
                 throw new Exception("Failed to create browser");
-            return FromNative(pBrowser);
+            return FromInArg(pBrowser);
         }
 
         public bool IsPopup => Marshal.GetDelegateForFunctionPointer<GetInt32Handler>(FixedPtr->is_popup)(Ptr) != 0;
@@ -66,14 +56,14 @@ namespace CefLite.Interop
         {
             var gethandler = Marshal.GetDelegateForFunctionPointer<GetObjectHandler>(FixedPtr->get_host);
             IntPtr hostptr = gethandler((IntPtr)Ptr);
-            return CefBrowserHost.FromNative((cef_browser_host_t*)hostptr);//TODO:FromNativeReturn
+            return CefBrowserHost.FromOutVal((cef_browser_host_t*)hostptr);
         }
 
         public CefFrame GetMainFrame()
         {
             var gethandler = Marshal.GetDelegateForFunctionPointer<GetObjectHandler>(FixedPtr->get_main_frame);
             IntPtr hostptr = gethandler((IntPtr)Ptr);
-            return (cef_frame_t*)hostptr;
+            return CefFrame.FromOutVal(hostptr);
         }
 
         long _id = long.MinValue;

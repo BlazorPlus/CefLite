@@ -21,7 +21,7 @@ namespace CefLite.Interop
 
     }
 
-    public unsafe class CefLifeSpanHandler : ObjectFromNet<cef_life_span_handler_t, CefLifeSpanHandler>
+    public unsafe partial class CefLifeSpanHandler : ObjectFromNet<cef_life_span_handler_t, CefLifeSpanHandler>
     {
         public cef_life_span_handler_t* FixedPtr => (cef_life_span_handler_t*)Ptr;
 
@@ -40,8 +40,8 @@ namespace CefLite.Interop
             delegate (IntPtr self, IntPtr browser)
             {
                 var inst = GetInstance(self);
-                CefWin.WriteDebugLine("on_after_created:" + CefBrowser.FromNative(browser).Identifier);
-                inst.AfterCreated?.Invoke(inst, CefBrowser.FromNative(browser));
+                CefWin.WriteDebugLine("on_after_created:" + CefBrowser.FromInArg(browser).Identifier);
+                inst.AfterCreated?.Invoke(inst, CefBrowser.FromInArg(browser));
             });
 
         public Action<CefLifeSpanHandler, CefBrowser> AfterCreated { get; set; }
@@ -50,10 +50,10 @@ namespace CefLite.Interop
             delegate (IntPtr self, IntPtr browser)
             {
                 var inst = GetInstance(self);
-                var browserObj = CefBrowser.FromNative(browser);
+                var browserObj = CefBrowser.FromInArg(browser);
                 browserObj._OnBeforeClose();
-                CefWin.WriteDebugLine("on_before_close:" + CefBrowser.FromNative(browser).Identifier);
-                inst.BeforeClose?.Invoke(inst, CefBrowser.FromNative(browser));
+                CefWin.WriteDebugLine("on_before_close:" + CefBrowser.FromInArg(browser).Identifier);
+                inst.BeforeClose?.Invoke(inst, CefBrowser.FromInArg(browser));
             });
 
         public Action<CefLifeSpanHandler, CefBrowser> BeforeClose { get; set; }
@@ -71,8 +71,8 @@ namespace CefLite.Interop
 
                 CefClient _client = client == null ? null : CefClient.GetInstance((IntPtr)client);
                 CefClient _prevclient = _client;
-                int res = handler.Invoke(inst, CefBrowser.FromNative(browser), CefFrame.FromNative(frame), cef_string_t.ToString(url), cef_string_t.ToString(name), dispostion, user_gesture, CefPopupFeatures.FromNative(features), CefWindowInfo.FromNative(wininfo)
-                    , ref _client, CefBrowserSettings.FromNative(settings), CefDictionaryValue.FromNative(extra_info), ref no_javascript_access);
+                int res = handler.Invoke(inst, CefBrowser.FromInArg(browser), CefFrame.FromInArg(frame), cef_string_t.ToString(url), cef_string_t.ToString(name), dispostion, user_gesture, CefPopupFeatures.FromInArg(features), CefWindowInfo.FromInArg(wininfo)
+                    , ref _client, CefBrowserSettings.FromInArg(settings), CefDictionaryValue.FromInArg(extra_info), ref no_javascript_access);
                 //TODO:not checked addref/release rules
                 if (_client != _prevclient)
                 {

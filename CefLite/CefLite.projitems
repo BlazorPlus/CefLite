@@ -57,6 +57,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Interop\PointerClasses.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interop\WindowsInterop.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interop\_baseclasses.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interop\_partial_gen.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interop\__empty.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SplashForm.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SplashForm.Designer.cs">

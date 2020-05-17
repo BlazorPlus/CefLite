@@ -41,7 +41,7 @@ namespace CefLite.Interop
         public IntPtr get_media_router;
     }
 
-    public unsafe class CefRequestContext : ObjectFromNet<cef_request_context_t, CefRequestContext>
+    public unsafe partial class CefRequestContext : ObjectFromNet<cef_request_context_t, CefRequestContext>
     {
 
         public cef_request_context_t* FixedPtr => (cef_request_context_t*)Ptr;

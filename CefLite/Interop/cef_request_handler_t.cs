@@ -26,7 +26,7 @@ namespace CefLite.Interop
         public IntPtr on_render_process_terminated;
     }
 
-    public unsafe class CefRequestHandler : ObjectFromNet<cef_request_handler_t, CefRequestHandler>
+    public unsafe partial class CefRequestHandler : ObjectFromNet<cef_request_handler_t, CefRequestHandler>
     {
         public cef_request_handler_t* FixedPtr => (cef_request_handler_t*)Ptr;
 
@@ -61,7 +61,7 @@ namespace CefLite.Interop
                 if (hostname.StartsWith("127.") && System.Net.IPAddress.TryParse(hostname, out var ip))
                 {
                     CefWin.WriteDebugLine("Allow IP : " + hostname);
-                    CefRequestCallback cefcallback = CefRequestCallback.FromNative(callback);
+                    CefRequestCallback cefcallback = CefRequestCallback.FromInArg(callback);
                     cefcallback.Cont();
                     return 1;
                 }
@@ -76,7 +76,7 @@ namespace CefLite.Interop
             delegate (IntPtr self, cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request, int user_gesture, int is_redirect)
             {
                 var inst = GetInstance(self);
-                return inst.BeforeBrowse?.Invoke(inst, CefBrowser.FromNative(browser), CefFrame.FromNative(frame), CefRequest.FromNative(request), user_gesture, is_redirect)
+                return inst.BeforeBrowse?.Invoke(inst, CefBrowser.FromInArg(browser), CefFrame.FromInArg(frame), CefRequest.FromInArg(request), user_gesture, is_redirect)
                     ?? 0;//TODO: option
             });
         public Func<CefRequestHandler, CefBrowser, CefFrame, CefRequest, int, int, int> BeforeBrowse { get; set; }
@@ -87,7 +87,7 @@ namespace CefLite.Interop
             delegate (IntPtr self, cef_browser_t* browser, cef_frame_t* frame, IntPtr targeturl, cef_window_open_disposition_t disposition)
             {
                 var inst = GetInstance(self);
-                inst.OpenUrlFromTab?.Invoke(inst, CefBrowser.FromNative(browser), CefFrame.FromNative(frame), cef_string_t.ToString(targeturl), disposition);
+                inst.OpenUrlFromTab?.Invoke(inst, CefBrowser.FromInArg(browser), CefFrame.FromInArg(frame), cef_string_t.ToString(targeturl), disposition);
 
                 return 1;//always cancel the default popup
             });

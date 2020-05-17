@@ -20,7 +20,7 @@ namespace CefLite.Interop
         public IntPtr get_render_process_handler;
     }
 
-    public unsafe class CefApp : ObjectFromNet<cef_app_t, CefApp>
+    public unsafe partial class CefApp : ObjectFromNet<cef_app_t, CefApp>
     {
 
         public cef_app_t* FixedPtr => (cef_app_t*)Ptr;
@@ -52,7 +52,7 @@ namespace CefLite.Interop
             delegate (IntPtr app, IntPtr pstrtype, IntPtr pcmdline)
             {
                 string strtype = cef_string_t.ToString(pstrtype);
-                var cmdline = CefCommandLine.FromNative(pcmdline);
+                var cmdline = CefCommandLine.FromInArg(pcmdline);
                 var inst = GetInstance(app);
 
                 //when specify --proxy-server=http://...:.. , remove --no-proxy-server
@@ -62,7 +62,7 @@ namespace CefLite.Interop
                     arr = arr.Where(v => v != "--no-proxy-server").ToArray();
                 }
 
-                string str = cmdline.GetCommandLineString() + " --single-process " + string.Join(" ", arr);
+                string str = cmdline.GetCommandLineString() + " " + string.Join(" ", arr);
                 cmdline.InitFromString(str);
 
                 CefWin.WriteDebugLine("OnBeforeCommandLineProcessing " + strtype + " : " + str);
@@ -101,7 +101,7 @@ namespace CefLite.Interop
         public IntPtr get_data_resource_for_scale;
     }
 
-    public unsafe class CefResourceBundleHandler : ObjectFromNet<cef_resource_bundle_handler_t, CefResourceBundleHandler>
+    public unsafe partial class CefResourceBundleHandler : ObjectFromNet<cef_resource_bundle_handler_t, CefResourceBundleHandler>
     {
         public cef_resource_bundle_handler_t* FixedPtr => (cef_resource_bundle_handler_t*)Ptr;
 

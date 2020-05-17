@@ -23,7 +23,7 @@ namespace CefLite.Interop
         public IntPtr on_schedule_message_pump_work;
     }
 
-    public unsafe class CefBrowserProcessHandler : ObjectFromNet<cef_browser_process_handler_t, CefBrowserProcessHandler>
+    public unsafe partial class CefBrowserProcessHandler : ObjectFromNet<cef_browser_process_handler_t, CefBrowserProcessHandler>
     {
         public cef_browser_process_handler_t* FixedPtr => (cef_browser_process_handler_t*)Ptr;
 
@@ -49,9 +49,9 @@ namespace CefLite.Interop
             (ptr, pcmdline) =>
             {
                 //CefWin.WriteDebugLine("Debug:CefBrowserProcessHandler:on_before_child_process_launch");
-                //CefWin.WriteDebugLine(CefCommandLine.FromNative(pcmdline).GetCommandLineString());
+                //CefWin.WriteDebugLine(CefCommandLine.FromInArg(pcmdline).GetCommandLineString());
                 var inst = GetInstance(ptr);
-                inst.BeforeChildProcessLaunch?.Invoke(inst, CefCommandLine.FromNative(pcmdline));
+                inst.BeforeChildProcessLaunch?.Invoke(inst, CefCommandLine.FromInArg(pcmdline));
             });
         public Action<CefBrowserProcessHandler, CefCommandLine> BeforeChildProcessLaunch { get; set; }
 

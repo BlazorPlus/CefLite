@@ -37,17 +37,9 @@ namespace CefLite.Interop
         public IntPtr prepend_wrapper;
     }
 
-    public unsafe class CefCommandLine : ObjectFromCef<cef_command_line_t, CefCommandLine>
+    public unsafe partial class CefCommandLine
     {
-        private CefCommandLine(IntPtr ptr) : base(ptr) { }
-        static public CefCommandLine FromNative(cef_command_line_t* ptr)
-            => FromNative((IntPtr)ptr, (p2) => new CefCommandLine(p2));
-        static public CefCommandLine FromNative(IntPtr ptr)
-            => FromNative(ptr, (p2) => new CefCommandLine(p2));
-        public cef_command_line_t* FixedPtr => (cef_command_line_t*)Ptr;
-
-        static public implicit operator CefCommandLine(cef_command_line_t* ptr) => FromNative(ptr);
-
+        
         public string GetCommandLineString()
         {
             return invoke_get_command_line_string(FixedPtr);

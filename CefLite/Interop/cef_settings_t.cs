@@ -17,7 +17,7 @@ namespace CefLite.Interop
         public IntPtr instance;
     }
 
-    public unsafe class CefMainArgs : FixedPointer<cef_main_args_t, CefMainArgs>
+    public unsafe partial class CefMainArgs : FixedPointer<cef_main_args_t, CefMainArgs>
     {
         public cef_main_args_t* FixedPtr => (cef_main_args_t*)Ptr;
 
@@ -86,7 +86,7 @@ namespace CefLite.Interop
 
     }
 
-    public unsafe class CefSettings : FixedPointer<cef_settings_t, CefSettings>
+    public unsafe partial class CefSettings : FixedPointer<cef_settings_t, CefSettings>
     {
         public cef_settings_t* FixedPtr => (cef_settings_t*)Ptr;
 
