@@ -72,18 +72,18 @@ static internal class _Extensions
 	}
 }
 
-namespace System.Windows
-{
-	public partial class Application
-	{
-		public List<Window> Windows { get; } = new List<Window>();
-		public void Run() { throw new NotSupportedException(); }
-		public void Shutdown() { }
-	}
+//namespace System.Windows
+//{
+//	public partial class Application
+//	{
+//		public List<Window> Windows { get; } = new List<Window>();
+//		public void Run() { throw new NotSupportedException(); }
+//		public void Shutdown() { }
+//	}
 
-	public class Window
-	{
-		public void Close() { }
-	}
-}
+//	public class Window
+//	{
+//		public void Close() { }
+//	}
+//}
 
