@@ -5,7 +5,7 @@
 		<TargetFramework>netcoreapp3.1</TargetFramework>
 		<UseWindowsForms>true</UseWindowsForms>
 		<UseWPF>true</UseWPF>
-		<Version>0.1.4</Version>
+		<Version>0.1.5</Version>
 		<PackageLicenseFile>license.txt</PackageLicenseFile>
 		<PackageIcon>Plus.png</PackageIcon>
 		<RepositoryUrl>https://github.com/BlazorPlus/CefLite/</RepositoryUrl>
@@ -22,7 +22,9 @@ check https://github.com/BlazorPlus/BlazorCefApp/ for more
 		<SignAssembly>true</SignAssembly>
 		<AssemblyOriginatorKeyFile>CefLite.snk</AssemblyOriginatorKeyFile>
 		<DelaySign>false</DelaySign>
-		<PackageReleaseNotes>0.1.2 - fixed addref/release issue
+		<PackageReleaseNotes>0.1.5 - zoom level, host api , download form 
+0.1.4 - allow winform cotnrol overlay
+0.1.2 - fixed addref/release issue
 --
 This is a CEF library for BlazorCefApp,
 check https://github.com/BlazorPlus/BlazorCefApp/ for more

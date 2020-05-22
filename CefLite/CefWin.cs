@@ -145,158 +145,158 @@ namespace CefLite
 
 
 			LibCefInterop.App.RenderProcessHandler.WebKitInitialized += delegate
-			  {
-				  CefV8Handler handler = new CefV8Handler();
-				  AddStaticObject(handler);
+			{
+				CefV8Handler handler = new CefV8Handler();
+				AddStaticObject(handler);
 
-				  ConcurrentDictionary<string, Assembly> dllmap = new ConcurrentDictionary<string, Assembly>();
+				ConcurrentDictionary<string, Assembly> dllmap = new ConcurrentDictionary<string, Assembly>();
 
-				  Assembly[] existAsms = null;
+				Assembly[] existAsms = null;
 
-				  object HandleExecute(CefV8Handler self, string name, CefV8Value[] args)
-				  {
-					  if (SettingsTrustedWebsiteHosts == null)
-						  throw new Exception("TrustedWebsiteHosts is not configured");
+				object HandleExecute(CefV8Handler self, string name, CefV8Value[] args)
+				{
+					if (SettingsTrustedWebsiteHosts == null)
+						throw new Exception("TrustedWebsiteHosts is not configured");
 
-					  //TODO: v8c get current , get browser
-					  CefV8Context ctx = CefV8Context.GetCurrent();
-					  if (ctx == null)
-						  throw new Exception("no current v8context");
-					  string url = ctx.GetFrame().Url;
-					  Uri uri = new Uri(url);
-					  if (!SettingsTrustedWebsiteHosts.Contains(uri.Host))
-					  {
-						  if (!SettingsTrustedWebsiteHosts.Contains(uri.Host + ":" + uri.Port))
-						  {
-							  throw (new Exception(uri.Host + ":" + uri.Port + " is not trusted in TrustedWebsiteHosts"));
-						  }
-					  }
+					//TODO: v8c get current , get browser
+					CefV8Context ctx = CefV8Context.GetCurrent();
+					if (ctx == null)
+						throw new Exception("no current v8context");
+					string url = ctx.GetFrame().Url;
+					Uri uri = new Uri(url);
+					if (!SettingsTrustedWebsiteHosts.Contains(uri.Host))
+					{
+						if (!SettingsTrustedWebsiteHosts.Contains(uri.Host + ":" + uri.Port))
+						{
+							throw (new Exception(uri.Host + ":" + uri.Port + " is not trusted in TrustedWebsiteHosts"));
+						}
+					}
 
-					  if (existAsms == null)
-						  existAsms = AppDomain.CurrentDomain.GetAssemblies();
+					if (existAsms == null)
+						existAsms = AppDomain.CurrentDomain.GetAssemblies();
 
-					  if (name == "_compileAssembly")
-					  {
-						  string dllname = args[0].GetStringValue();
-						  string code = args[1].GetStringValue();
+					if (name == "_compileAssembly")
+					{
+						string dllname = args[0].GetStringValue();
+						string code = args[1].GetStringValue();
 
-						  WriteDebugLine("_compileAssembly:" + dllname + ":" + code.Length);
+						WriteDebugLine("_compileAssembly:" + dllname + ":" + code.Length);
 
-						  if (!SettingAllowCompileCSharpCode)
-							  throw new Exception("AllowCompileCSharpCode is not setted to true");
+						if (!SettingAllowCompileCSharpCode)
+							throw new Exception("AllowCompileCSharpCode is not setted to true");
 
-						  if (dllname.IndexOfAny(System.IO.Path.GetInvalidFileNameChars()) != -1)
-							  throw new Exception("Invalid dllname.");
+						if (dllname.IndexOfAny(System.IO.Path.GetInvalidFileNameChars()) != -1)
+							throw new Exception("Invalid dllname.");
 
-						  //System.CodeDom.Compiler.CodeCompiler cc= System.CodeDom.Compiler.CodeCompiler
-						  var cdp = System.CodeDom.Compiler.CodeDomProvider.CreateProvider("cs");
-						  var cp = new System.CodeDom.Compiler.CompilerParameters();
-						  foreach (Assembly asm in existAsms)
-							  cp.ReferencedAssemblies.Add(asm.Location);
-						  cp.GenerateExecutable = false;
-						  cp.GenerateInMemory = true;
-						  cp.IncludeDebugInformation = true;
-						  cp.OutputAssembly = dllname;
+						//System.CodeDom.Compiler.CodeCompiler cc= System.CodeDom.Compiler.CodeCompiler
+						var cdp = System.CodeDom.Compiler.CodeDomProvider.CreateProvider("cs");
+						var cp = new System.CodeDom.Compiler.CompilerParameters();
+						foreach (Assembly asm in existAsms)
+							cp.ReferencedAssemblies.Add(asm.Location);
+						cp.GenerateExecutable = false;
+						cp.GenerateInMemory = true;
+						cp.IncludeDebugInformation = true;
+						cp.OutputAssembly = dllname;
 
-						  var cr = cdp.CompileAssemblyFromSource(cp, code);
-						  foreach (System.CodeDom.Compiler.CompilerError err in cr.Errors)
-						  {
-							  string msg = err.ToString();
-							  if (msg.Contains("System.Runtime.CompilerServices.ExtensionAttribute"))
-							  {
-								  //ignore
-							  }
-							  else
-							  {
-								  WriteDebugLine(err.ToString());
-							  }
-							  if (err.IsWarning)
-								  continue;
-							  foreach (var asm in existAsms)
-							  {
-								  Console.WriteLine(asm.FullName);
-							  }
-							  throw new Exception(err.ToString());
-						  }
+						var cr = cdp.CompileAssemblyFromSource(cp, code);
+						foreach (System.CodeDom.Compiler.CompilerError err in cr.Errors)
+						{
+							string msg = err.ToString();
+							if (msg.Contains("System.Runtime.CompilerServices.ExtensionAttribute"))
+							{
+								//ignore
+							}
+							else
+							{
+								WriteDebugLine(err.ToString());
+							}
+							if (err.IsWarning)
+								continue;
+							foreach (var asm in existAsms)
+							{
+								Console.WriteLine(asm.FullName);
+							}
+							throw new Exception(err.ToString());
+						}
 
-						  WriteDebugLine("new assembly compiled : " + cr.CompiledAssembly.FullName);
+						WriteDebugLine("new assembly compiled : " + cr.CompiledAssembly.FullName);
 
-						  dllmap[dllname] = cr.CompiledAssembly;
-					  }
-					  else if (name == "_installAssembly")
-					  {
-						  string dllname = args[0].GetStringValue();
-						  string base64 = args[1].GetStringValue();
+						dllmap[dllname] = cr.CompiledAssembly;
+					}
+					else if (name == "_installAssembly")
+					{
+						string dllname = args[0].GetStringValue();
+						string base64 = args[1].GetStringValue();
 
-						  WriteDebugLine("_installAssembly:" + dllname + ":" + base64.Length);
+						WriteDebugLine("_installAssembly:" + dllname + ":" + base64.Length);
 
-						  if (SettingTrustedPublicKeyTokens == null)
-							  throw new Exception("CefWin.PublicKeyTokenList is not configured");
+						if (SettingTrustedPublicKeyTokens == null)
+							throw new Exception("CefWin.PublicKeyTokenList is not configured");
 
-						  byte[] data = Convert.FromBase64String(base64);
-						  Assembly asm = AppDomain.CurrentDomain.Load(data);
-						  byte[] tokendata = asm.GetName().GetPublicKeyToken();
-						  if (tokendata == null)
-							  throw new Exception("the dll " + dllname + " must signed for a PublicKeyToken and register it into CefWin.PublicKeyTokenList ");
-						  string token = BitConverter.ToString(tokendata).Replace("-", "").ToLower();
-						  if (!SettingTrustedPublicKeyTokens.Contains(token))
-							  throw new Exception("Invalid dll , " + token + " is not in CefWin.PublicKeyTokenList");
+						byte[] data = Convert.FromBase64String(base64);
+						Assembly asm = AppDomain.CurrentDomain.Load(data);
+						byte[] tokendata = asm.GetName().GetPublicKeyToken();
+						if (tokendata == null)
+							throw new Exception("the dll " + dllname + " must signed for a PublicKeyToken and register it into CefWin.PublicKeyTokenList ");
+						string token = BitConverter.ToString(tokendata).Replace("-", "").ToLower();
+						if (!SettingTrustedPublicKeyTokens.Contains(token))
+							throw new Exception("Invalid dll , " + token + " is not in CefWin.PublicKeyTokenList");
 
-						  WriteDebugLine("new assembly installed : " + asm.FullName);
+						WriteDebugLine("new assembly installed : " + asm.FullName);
 
-						  dllmap[dllname] = asm;
-					  }
-					  else if (name == "_executeAssembly")
-					  {
-						  string dllname = args[0].GetStringValue();
-						  string clsname = args[1].GetStringValue();
-						  string method = args[2].GetStringValue();
+						dllmap[dllname] = asm;
+					}
+					else if (name == "_executeAssembly")
+					{
+						string dllname = args[0].GetStringValue();
+						string clsname = args[1].GetStringValue();
+						string method = args[2].GetStringValue();
 
-						  WriteDebugLine("_executeAssembly:" + dllname + ":" + clsname + ":" + method);
+						WriteDebugLine("_executeAssembly:" + dllname + ":" + clsname + ":" + method);
 
-						  object[] methodargs = (object[])args[3].ToObject() ?? Array.Empty<object>();
-						  Assembly asm;
-						  if (!dllmap.TryGetValue(dllname, out asm))
-							  throw new Exception(dllname + " not exists");
-						  Type type = asm.GetType(clsname);
+						object[] methodargs = (object[])args[3].ToObject() ?? Array.Empty<object>();
+						Assembly asm;
+						if (!dllmap.TryGetValue(dllname, out asm))
+							throw new Exception(dllname + " not exists");
+						Type type = asm.GetType(clsname);
 
-						  WriteDebugLine("Type : " + type.AssemblyQualifiedName);
+						WriteDebugLine("Type : " + type.AssemblyQualifiedName);
 
-						  var members = type.GetMember(method);
-						  if (members.Length == 0)
-							  throw new Exception("Method " + method + " not exists in " + type.AssemblyQualifiedName);
-						  if (members.Length != 1)
-							  throw new Exception("Too many member " + method + " in " + type.AssemblyQualifiedName);
+						var members = type.GetMember(method);
+						if (members.Length == 0)
+							throw new Exception("Method " + method + " not exists in " + type.AssemblyQualifiedName);
+						if (members.Length != 1)
+							throw new Exception("Too many member " + method + " in " + type.AssemblyQualifiedName);
 
-						  var minfo = members[0] as MethodInfo;
-						  if (minfo == null)
-							  throw new Exception("Member " + method + " is not a method in " + type.AssemblyQualifiedName);
-						  if (!minfo.IsStatic)
-							  throw new Exception("Method " + method + " is not static in " + type.AssemblyQualifiedName);
-						  if (!minfo.IsPublic)
-							  throw new Exception("Method " + method + " is not public in " + type.AssemblyQualifiedName);
+						var minfo = members[0] as MethodInfo;
+						if (minfo == null)
+							throw new Exception("Member " + method + " is not a method in " + type.AssemblyQualifiedName);
+						if (!minfo.IsStatic)
+							throw new Exception("Method " + method + " is not static in " + type.AssemblyQualifiedName);
+						if (!minfo.IsPublic)
+							throw new Exception("Method " + method + " is not public in " + type.AssemblyQualifiedName);
 
 
-						  object result = null;
+						object result = null;
 
-						  InvokeInAppThread(delegate
-						  {
-							  result = minfo.Invoke(null, new object[] { methodargs });
-						  });
+						InvokeInAppThread(delegate
+						{
+							result = minfo.Invoke(null, new object[] { methodargs });
+						});
 
-					  }
-					  else
-					  {
-						  throw new Exception("Invalid func " + name);
-					  }
-					  return null;
-				  }
-				  handler.Execute = HandleExecute;
+					}
+					else
+					{
+						throw new Exception("Invalid func " + name);
+					}
+					return null;
+				}
+				handler.Execute = HandleExecute;
 
-				  //TODO: shall use async return Promise ... now show dialog will block the JS executing, 
-				  //TODO: Support multi-process : 
+				//TODO: shall use async return Promise ... now show dialog will block the JS executing, 
+				//TODO: Support multi-process : 
 
-				  int r = CefV8Context.CefRegisterExtension("cefwin_extention", @"
+				int r = CefV8Context.CefRegisterExtension("cefwin_extention", @"
 var CefWin={};
 (function(){
     var dllmap={};
@@ -339,8 +339,8 @@ var CefWin={};
     }
 })();
 ", handler);
-				  WriteDebugLine("CefRegisterExtension:" + r);
-			  };
+				WriteDebugLine("CefRegisterExtension:" + r);
+			};
 
 
 			//TODO: implement the Notification API
@@ -501,7 +501,7 @@ var CefWin={};
 
 
 
-#region ActivateExistingApp
+		#region ActivateExistingApp
 
 		/// <summary>
 		/// Tool method : If another app is running , return true , program shall exit.
@@ -645,10 +645,10 @@ var CefWin={};
 			}
 		}
 
-#endregion
+		#endregion
 
 
-#region Open Find Register Browser
+		#region Open Find Register Browser
 
 		static public DefaultBrowserForm OpenBrowser(string url)
 		{
@@ -699,10 +699,10 @@ var CefWin={};
 			};
 		}
 
-#endregion
+		#endregion
 
 
-#region RunApplication
+		#region RunApplication
 
 		/// <summary>
 		/// Tool method : Start the windows message loop , and monitor status , close all when any of them stopped.
@@ -797,10 +797,10 @@ var CefWin={};
 
 		}
 
-#endregion
+		#endregion
 
 
-#region Message Loop
+		#region Message Loop
 
 		static bool _cefmessagelooprunning = false;
 		static void InvokeCefMessageLoopOnce()
@@ -949,10 +949,10 @@ var CefWin={};
 			}
 			Timer timer = null;
 			timer = new Timer(delegate
-				{
-					timer.Dispose();
-					PostToAppThread(handler);
-				}, null, ms, Timeout.Infinite);
+			{
+				timer.Dispose();
+				PostToAppThread(handler);
+			}, null, ms, Timeout.Infinite);
 		}
 		static public void PostToAppThread(Action handler)
 		{
@@ -1031,7 +1031,7 @@ var CefWin={};
 		}
 
 
-#endregion
+		#endregion
 
 
 
@@ -1070,7 +1070,7 @@ var CefWin={};
 		}
 
 
-#region Cef Load/Unload
+		#region Cef Load/Unload
 
 		static public bool InternalLoadLibCefDll(string fullpath)
 		{
@@ -1219,7 +1219,7 @@ var CefWin={};
 
 		}
 
-#endregion
+		#endregion
 
 
 

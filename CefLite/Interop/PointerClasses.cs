@@ -228,6 +228,14 @@ namespace CefLite.Interop
             return (TC)inst;
         }
 
+        static public TC FromOutVal(IntPtr ptr)
+		{
+            TC tc = GetInstance(ptr);
+            if (tc != null)
+                tc.Release();
+            return tc;
+		}
+
         static DelegateHolder<EventCallbackHandler> holder_add_ref = new DelegateHolder<EventCallbackHandler>(ptr =>
         {
             GetInstance(ptr).AddRef();

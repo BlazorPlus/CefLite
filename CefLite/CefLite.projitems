@@ -16,9 +16,6 @@
       <DependentUpon>DefaultBrowserForm.cs</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)DefaultDownloadForm.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)DefaultDownloadForm.Designer.cs">
-      <DependentUpon>DefaultDownloadForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)DownloadItem.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Enums.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ICefWinBrowser.cs" />
@@ -33,6 +30,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Interop\cef_dictionary_value_t.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interop\cef_download_handler_t.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interop\cef_frame_t.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interop\cef_key_event_t.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interop\cef_life_span_handler_t.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interop\cef_list_value_t.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interop\cef_load_handler_t.cs" />

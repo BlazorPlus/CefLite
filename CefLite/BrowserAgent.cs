@@ -135,13 +135,21 @@ namespace CefLite
 			{
 				base.Dispose(disposing);
 
-				var func = Marshal.GetDelegateForFunctionPointer<EventCallbackHandler>(_owner.BrowserHost.FixedPtr->close_dev_tools);
-				func((IntPtr)_owner.BrowserHost.FixedPtr);
+				_owner.BrowserHost.CloseDevTools();
 			}
 		}
 
 
 		DevToolsForm _devtoolsForm;
+
+		public void CloseDevTools()
+		{
+			if (_devtoolsForm != null && !_devtoolsForm.IsDisposed)
+			{
+				BrowserHost.CloseDevTools();
+			}
+
+		}
 
 		public void ShowDevTools()
 		{
@@ -247,8 +255,8 @@ namespace CefLite
 				   (CefDownloadHandler handler, CefBrowser browser, CefDownloadItem item, CefDownloadItemCallback callback) =>
 				   {
 					   CefWin.WriteDebugLine("OnDownloadUpdated:" + " " + browser.IsPopup + ":" + browser.HasDocument);
-					   CefWin.WriteDebugLine(item.Id + ":" + item.TotalBytes + ":" + item.Url);
-					   CefWin.WriteDebugLine(item.IsInProgress + ":" + item.ReceivedBytes);
+					   CefWin.WriteDebugLine(item.Id + ":" + item.ReceivedBytes + "/" + item.TotalBytes + ":" + item.Url);
+					   CefWin.WriteDebugLine(item.IsInProgress + ":" + item.IsCanceled + ":" + item.IsComplete + ":" +item.FullPath);
 
 					   if (lastdownloadid == item.Id && lastdownloadop == "cancel")
 					   {
@@ -262,9 +270,10 @@ namespace CefLite
 						   lastdownloadop = "download";
 						   DownloadItem.Show(item, callback);
 					   }
-					   else
+
+					   if (item.TotalBytes > 0)
 					   {
-						   DownloadItem.PostVersionUpdateEvent();
+						   DownloadItem.Update(item, callback);
 					   }
 
 					   //callback.Resume();

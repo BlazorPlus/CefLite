@@ -66,16 +66,16 @@ namespace CefLite.Interop
         public CefLoadHandler LoadHandler { get; set; } 
 
         static DelegateHolder<GetObjectHandler> holder_get_request_handler = new DelegateHolder<GetObjectHandler>(
-           app => GetInstance(app).RequestHandler.AddRefReturnIntPtr());
+           self => GetInstance(self).RequestHandler.AddRefReturnIntPtr());
 
         static DelegateHolder<GetObjectHandler> holder_get_life_span_handler = new DelegateHolder<GetObjectHandler>(
-           app => GetInstance(app).LifeSpanHandler.AddRefReturnIntPtr());
+           self => GetInstance(self).LifeSpanHandler.AddRefReturnIntPtr());
 
         static DelegateHolder<GetObjectHandler> holder_get_download_handler = new DelegateHolder<GetObjectHandler>(
-          app => GetInstance(app).DownloadHandler.AddRefReturnIntPtr());
+          self => GetInstance(self).DownloadHandler.AddRefReturnIntPtr());
 
         static DelegateHolder<GetObjectHandler> holder_get_load_handler = new DelegateHolder<GetObjectHandler>(
-            app => GetInstance(app).LoadHandler.AddRefReturnIntPtr());
+            self => GetInstance(self).LoadHandler.AddRefReturnIntPtr());
 
 
         //Addition options :

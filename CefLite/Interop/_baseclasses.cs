@@ -9,12 +9,17 @@ using System.Runtime.InteropServices;
 namespace CefLite.Interop
 {
     //must use these delegates , because Marshal.GetFunctionPointerForDelegate , GetDelegateForFunctionPointer dont support delegate with generic types
-    public delegate int GetInt32Handler(IntPtr app);
-    public delegate uint GetUInt32Handler(IntPtr app);
-    public delegate int GetInt64Handler(IntPtr app);
+    public delegate int GetInt32Handler(IntPtr self);
+    public delegate uint GetUInt32Handler(IntPtr self);
+    public delegate int GetInt64Handler(IntPtr self);
+    public delegate float GetSingleHandler(IntPtr self);
+    public delegate double GetDoubleHandler(IntPtr self);
     public delegate IntPtr GetObjectHandler(IntPtr self);
     public delegate IntPtr GetObjectHandler2(IntPtr self,IntPtr index);
-    
+
+    public delegate void SetInt32Handler(IntPtr self, int val);
+    public delegate void SetSingleHandler(IntPtr self,float val);
+    public delegate void SetDoubleHandler(IntPtr self,double val);
     public delegate void EventCallbackHandler(IntPtr self);
     public delegate void EventCallbackHandler2(IntPtr self, IntPtr p2);
     public delegate void EventCallbackHandler3(IntPtr self, IntPtr p2, IntPtr p3);
