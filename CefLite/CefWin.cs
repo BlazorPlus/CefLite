@@ -12,7 +12,7 @@ using System.Reflection;
 
 namespace CefLite
 {
-	public class CefWin
+	public partial class CefWin
 	{
 		static public string[] ProgramArgs { get; set; } = Environment.GetCommandLineArgs().Skip(1).ToArray();
 
@@ -94,6 +94,8 @@ namespace CefLite
 		{
 			_foreverObjs.Add(obj ?? new ArgumentNullException(nameof(obj)));
 		}
+
+		public static Func<Assembly[], string, string, Assembly> CompileCodeHandler { get; set; }
 
 		static CefWin()
 		{
@@ -188,40 +190,7 @@ namespace CefLite
 						if (dllname.IndexOfAny(System.IO.Path.GetInvalidFileNameChars()) != -1)
 							throw new Exception("Invalid dllname.");
 
-						//System.CodeDom.Compiler.CodeCompiler cc= System.CodeDom.Compiler.CodeCompiler
-						var cdp = System.CodeDom.Compiler.CodeDomProvider.CreateProvider("cs");
-						var cp = new System.CodeDom.Compiler.CompilerParameters();
-						foreach (Assembly asm in existAsms)
-							cp.ReferencedAssemblies.Add(asm.Location);
-						cp.GenerateExecutable = false;
-						cp.GenerateInMemory = true;
-						cp.IncludeDebugInformation = true;
-						cp.OutputAssembly = dllname;
-
-						var cr = cdp.CompileAssemblyFromSource(cp, code);
-						foreach (System.CodeDom.Compiler.CompilerError err in cr.Errors)
-						{
-							string msg = err.ToString();
-							if (msg.Contains("System.Runtime.CompilerServices.ExtensionAttribute"))
-							{
-								//ignore
-							}
-							else
-							{
-								WriteDebugLine(err.ToString());
-							}
-							if (err.IsWarning)
-								continue;
-							foreach (var asm in existAsms)
-							{
-								Console.WriteLine(asm.FullName);
-							}
-							throw new Exception(err.ToString());
-						}
-
-						WriteDebugLine("new assembly compiled : " + cr.CompiledAssembly.FullName);
-
-						dllmap[dllname] = cr.CompiledAssembly;
+						dllmap[dllname] = CompileCode(existAsms, dllname, code);
 					}
 					else if (name == "_installAssembly")
 					{
@@ -366,7 +335,6 @@ var CefWin={};
 			//  };
 
 		}
-
 
 		static internal void WriteDebugLine(object msg)
 		{

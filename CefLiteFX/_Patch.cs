@@ -8,7 +8,62 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Reflection;
 
+namespace CefLite
+{
+	public partial class CefWin
+	{
+
+		private static Assembly CompileCode(Assembly[] existAsms, string dllname, string code)
+		{
+			if (CompileCodeHandler != null)
+			{
+				var ccasm = CompileCodeHandler(existAsms, dllname, code);
+				if (ccasm != null)
+					return ccasm;
+			}
+
+
+			//System.CodeDom.Compiler.CodeCompiler cc= System.CodeDom.Compiler.CodeCompiler
+			var cdp = System.CodeDom.Compiler.CodeDomProvider.CreateProvider("cs");
+			var cp = new System.CodeDom.Compiler.CompilerParameters();
+			foreach (Assembly asm in existAsms)
+				cp.ReferencedAssemblies.Add(asm.Location);
+			cp.GenerateExecutable = false;
+			cp.GenerateInMemory = true;
+			cp.IncludeDebugInformation = true;
+			cp.OutputAssembly = dllname;
+
+			var cr = cdp.CompileAssemblyFromSource(cp, code);
+			foreach (System.CodeDom.Compiler.CompilerError err in cr.Errors)
+			{
+				string msg = err.ToString();
+				if (msg.Contains("System.Runtime.CompilerServices.ExtensionAttribute"))
+				{
+					//ignore
+				}
+				else
+				{
+					WriteDebugLine(err.ToString());
+				}
+				if (err.IsWarning)
+					continue;
+				foreach (var asm in existAsms)
+				{
+					Console.WriteLine(asm.FullName);
+				}
+				throw new Exception(err.ToString());
+			}
+
+			WriteDebugLine("new assembly compiled : " + cr.CompiledAssembly.FullName);
+
+			var resasm = cr.CompiledAssembly;
+			return resasm;
+		}
+
+	}
+}
 
 static internal class _Extensions
 {

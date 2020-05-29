@@ -5,7 +5,7 @@
 		<TargetFramework>netcoreapp3.1</TargetFramework>
 		<UseWindowsForms>true</UseWindowsForms>
 		<UseWPF>true</UseWPF>
-		<Version>0.1.5</Version>
+		<Version>0.1.6</Version>
 		<PackageLicenseFile>license.txt</PackageLicenseFile>
 		<PackageIcon>Plus.png</PackageIcon>
 		<RepositoryUrl>https://github.com/BlazorPlus/CefLite/</RepositoryUrl>

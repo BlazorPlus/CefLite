@@ -5,9 +5,11 @@ VisualStudioVersion = 16.0.30011.22
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "CefLite", "CefLite\CefLite.shproj", "{3DB27A06-0596-4307-B289-33F4C8B60B60}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CefLiteCore", "CefLiteCore\CefLiteCore.csproj", "{7F3D7F58-EE21-44E9-BF74-FB59701DC3B1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CefLiteCore", "CefLiteCore\CefLiteCore.csproj", "{7F3D7F58-EE21-44E9-BF74-FB59701DC3B1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CefLiteFX", "CefLiteFX\CefLiteFX.csproj", "{E426B24D-18F1-435D-8CD9-199A46F081F1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestCore", "TestCore\TestCore.csproj", "{DF9F7992-D7D3-45FF-B090-6D67EA5FD260}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -28,6 +30,10 @@ Global
 		{E426B24D-18F1-435D-8CD9-199A46F081F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E426B24D-18F1-435D-8CD9-199A46F081F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E426B24D-18F1-435D-8CD9-199A46F081F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF9F7992-D7D3-45FF-B090-6D67EA5FD260}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF9F7992-D7D3-45FF-B090-6D67EA5FD260}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF9F7992-D7D3-45FF-B090-6D67EA5FD260}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF9F7992-D7D3-45FF-B090-6D67EA5FD260}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

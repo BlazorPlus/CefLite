@@ -1,0 +1,28 @@
+﻿@page "/"
+
+<h1>Hello, world!</h1>
+
+Welcome to your new app.
+
+<br />
+<a href="https://github.com/BlazorPlus/CefLite" target="_blank">https://github.com/BlazorPlus/CefLite</a>
+<br />
+<a href="https://github.com/BlazorPlus/BlazorCefApp" target="_blank">https://github.com/BlazorPlus/BlazorCefApp</a>
+
+<h1 />
+
+<button class="btn btn-info" @onclick="ShowDevTools">DevTools</button>
+
+@code{
+
+	void ShowDevTools()
+	{
+
+		BlazorSession.Current.RunBrowser(browser =>
+		{
+			browser.Agent.ShowDevTools();
+		});
+
+	}
+
+}
